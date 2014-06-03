@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:prcc="http://java.sun.com/jsf/composite/prcomponents" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/templates/effortLayout.xhtml">
+        <ui:define name="top">
+            #{bundle.Eneff}
+        </ui:define>
+        <ui:define name="content"> 
+            <h:form id="addEffForm">
+                <f:event type="preRenderView" listener="#{effortBean.init()}"/>
+                <h4> Prospect List </h4>
+                <p:dataTable id="prospectTable"
+                             value="#{effortBean.prospectModel}"							 
+                             var="pList"
+                             rowIndexVar="rowIndex" 
+                             rowKey="#{pList.prospectNo}"
+                             scrollRows="20"
+                             scrollable="true"
+                             liveScroll="true"
+                             scrollWidth="480"
+                             selection="#{effortBean.selectedProspect}"
+                             selectionMode="single"
+                             scrollHeight="150">
+                    <p:ajax event="rowSelect"
+                            async="true"
+                            update=":addEffForm"/>
+                    <p:column headerText="Prospect No." width="7%" >
+                        <h:outputText value="#{pList.prospectNo}" />
+                    </p:column>
+                    <p:column headerText="Last Name" width="25" >
+                        <h:outputText value="#{pList.lastName}" />
+                    </p:column>
+                    <p:column headerText="First Name" width="30">
+                        <h:outputText value="#{pList.firstName}" />
+                    </p:column>
+                    <p:column headerText="Middle Name" width="30">
+                        <h:outputText value="#{pList.middleName}" />
+                    </p:column>
+                </p:dataTable>
+                <h:outputText id="prompt" 
+                              rendered="#{empty effortBean.selectedProspect.prospectNo}"
+                              value="Select prospect from list above" 
+                              style="font-size: 12px; font-weight: bold"/>
+                <br></br>
+                <br></br>
+                <br></br>
+                <p>
+                    <h:inputText id ="surname" 
+                                 size="20" 
+                                 required="true"
+                                 readonly="true"
+                                 value="#{effortBean.selectedProspect.lastName}"/>
+                    <span style="margin-left:10px;">
+                        <h:inputText id="firstName" 
+                                     size="25" 
+                                     required="true"
+                                     readonly="true"
+                                     value="#{effortBean.selectedProspect.firstName}"/>
+                    </span>
+                    <span style="margin-left:10px;">
+                        <h:inputText id="middleName" 
+                                     size="20" 
+                                     readonly="true"
+                                     value="#{effortBean.selectedProspect.middleName}"/>
+                    </span>
+                    <br/>
+                    <h:outputLabel for ="surname" value="Surname"/>
+                    <span style="margin-left:110px;"> 
+                        <h:outputLabel for ="firstName" value="First Name"/>
+                    </span>
+                    <span style="margin-left:128px;"> 
+                        <h:outputLabel for="middleName" value="Middle Name"/>
+                    </span>
+                    <br></br>
+                </p>
+                <h:outputLabel id="actDateFromLabel" 
+                               value="Activity Start Date : " 
+                               for="actDateFromLabel" />
+                <p:calendar id="actStartCal"
+                            maxdate="#{currentDate}"
+                            value="#{effortBean.activity.actDateFrom}"
+                            binding="#{addEffForm}"
+                            required="true" 
+                            readonlyInput="true"
+                            size="10"
+                            disabled="#{empty effortBean.selectedProspect.prospectNo}"
+                            pattern="MM/dd/yyyy" >
+                </p:calendar> 
+                <h:outputText id ="startDate" value="#{effortBean.activity.actDateFrom}"/>
+                <span style="margin-left:35px;">
+                    <h:outputLabel id="actDateEnd"  value="Activity End Date : " 
+                                   for="actDateEnd" />
+                    <p:calendar id="actEndCal" 
+                                maxdate="#{currentDate}"
+                                mindate="#{effortBean.activity.actDateFrom}"
+                                value="#{effortBean.activity.actDateTo}" 
+                                required="true" 
+                                size="10"
+                                immediate="false"
+                                readonly="true"
+                                binding="#{actEndCal}"
+                                disabled="#{empty effortBean.selectedProspect.prospectNo}"
+                                pattern="MM/dd/yyyy" > 
+                    </p:calendar>
+                </span>
+                <span style="margin-left:90px;">
+                    <h:outputLabel id="rprtDateEnc"
+                                   for="rprtDateEnc" 
+                                   value="Report Date  : " />
+                    <h:inputText id="repEncDate" 
+                                 binding="#{rprtDateEnc}"
+                                 value="#{effortBean.report.reportDateEncoded}"
+                                 required="true" 
+                                 size="10"
+                                 readonly="true"
+                                 disabled="#{empty effortBean.selectedProspect.prospectNo}">
+                        <f:convertDateTime type ="date" pattern="MM/dd/yyyy"/>  
+                    </h:inputText>
+                </span>
+                <br/>
+                <p>
+                    <h4> Recruitment Effort Narrative </h4> <br/>
+                    <p:editor id="effReport" 
+                              value="#{effortBean.report.reportDtl}"
+                              binding="#{effReport}"
+                              width="630"
+                              required="true">
+                    </p:editor>
+                    <h:panelGrid columns="2" style="margin-top:10px">  
+                        <p:commandButton id="submitButton"  
+                                         value="Submit" 
+                                         update=":addEffForm"
+                                         immediate="true"
+                                         icon="ui-icon-disk"  />
+                    </h:panelGrid> 
+                </p>
+                <br></br>
+                <prcc:effortForm prospect="#{effortBean.prospect}" 
+                                 rendered="#{not empty effReport.submittedValue}"
+                                 canNotInput="false"  />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

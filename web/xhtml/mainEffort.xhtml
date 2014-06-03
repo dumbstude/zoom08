@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:prcc="http://java.sun.com/jsf/composite/prcomponents" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/templates/effortLayout.xhtml">
+        <ui:define name="top">
+            #{bundle.Effort}
+        </ui:define>
+        <ui:define name="content"> 
+            <f:event type="preRenderView" listener="#{effortBean.effortBeanClear()}"/>
+            <h:form>
+                <h4> Prospect List </h4>
+                <p:dataTable id="prospectList"
+                             value="#{prospectBean.prospectList}" 
+                             var="pList" 
+                             scrollRows="20"  
+                             scrollable="true" 
+                             liveScroll="true" 
+                             scrollWidth="480" 
+                             scrollHeight="150"  >  
+                    <p:column headerText="Prospect No." width="7%" >
+                        <h:outputText value="#{pList.prospectNo}" />
+                    </p:column>
+                    <p:column headerText="Last Name" 
+                              width="25" >
+                        <h:outputText value="#{pList.lastName}" />
+                    </p:column>
+                    <p:column headerText="First Name" 
+                              width="30">
+                        <h:outputText value="#{pList.firstName}" />
+                    </p:column>
+                    <p:column headerText="Middle Name"
+                              width="30">
+                        <h:outputText value="#{pList.middleName}" />
+                    </p:column>
+                </p:dataTable>
+                <br></br>
+                <p><span style="margin-left:400px;">
+                        <h:commandButton value="View " 
+                                         action="/xhtml/viewEffort.xhtml" 
+                                         immediate ="true"/>
+                        <h:commandButton value="Add" 
+                                         action="/xhtml/addEffort.xhtml" 
+                                         immediate="true" />
+                    </span> </p>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
