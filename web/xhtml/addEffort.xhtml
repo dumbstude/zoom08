@@ -13,7 +13,7 @@
         </ui:define>
         <ui:define name="content"> 
             <h:form id="addEffForm">
-                <f:event type="preRenderView" listener="#{effortBean.init()}"/>
+                <f:event type="preRenderView" listener="#{effortBean.init}"/>
                 <h4> Prospect List </h4>
                 <p:dataTable id="prospectTable"
                              value="#{effortBean.prospectModel}"							 
@@ -80,31 +80,29 @@
                     <br></br>
                 </p>
                 <h:outputLabel id="actDateFromLabel" 
-                               value="Activity Start Date : " 
+                               value="Activity Start Date  " 
                                for="actDateFromLabel" />
                 <p:calendar id="actStartCal"
                             maxdate="#{currentDate}"
                             value="#{effortBean.activity.actDateFrom}"
-                            binding="#{addEffForm}"
+                            binding="#{actStartCal}"
                             required="true" 
-                            readonlyInput="true"
                             size="10"
                             disabled="#{empty effortBean.selectedProspect.prospectNo}"
                             pattern="MM/dd/yyyy" >
+                    <p:ajax event="dateSelect" listener="#{effortBean.handleDateSelect}" process="addEffForm" update="addEffForm"/>
                 </p:calendar> 
-                <h:outputText id ="startDate" value="#{effortBean.activity.actDateFrom}"/>
                 <span style="margin-left:35px;">
-                    <h:outputLabel id="actDateEnd"  value="Activity End Date : " 
-                                   for="actDateEnd" />
+                    <h:outputLabel id="actDateToLabel"  
+                                   value="Activity End Date  " 
+                                   for="actDateToLabel" />
                     <p:calendar id="actEndCal" 
                                 maxdate="#{currentDate}"
-                                mindate="#{effortBean.activity.actDateFrom}"
+                                mindate="#{actStartCal.submittedValue}"
                                 value="#{effortBean.activity.actDateTo}" 
+                                binding="#{addEffForm}"
                                 required="true" 
                                 size="10"
-                                immediate="false"
-                                readonly="true"
-                                binding="#{actEndCal}"
                                 disabled="#{empty effortBean.selectedProspect.prospectNo}"
                                 pattern="MM/dd/yyyy" > 
                     </p:calendar>
@@ -125,11 +123,23 @@
                 </span>
                 <br/>
                 <p>
-                    <h4> Recruitment Effort Narrative </h4> <br/>
+                    <h:message for="actEndCal" />
+                    actStartCal.submittedValue = #{actStartCal.submittedValue} <br/>
+                    actStartCal.localValue = #{actStartCal.localValue} <br/>
+                    actStartCal.value= #{actStartCal.value} or effortBean.activity.actDateFrom= #{effortBean.activity.actDateFrom}<br/>
+                    lastName = #{effortBean.selectedProspect.lastName} <br/>
+                    actEndCal.submittedValue = #{actEndCal.submittedValue} <br/>
+                    actEndCal.localValue = #{actEndCal.localValue} <br/>
+                    actEndCal.value= #{actEndCal.value} or #{effortBean.activity.actDateTo}<br/>
+                <h:outputText id="prompt2" 
+                              rendered="#{empty actStartCal.submittedValue}"
+                              value="Recruitment Effort Narrative" 
+                              style="font-size: 14px; font-weight: bold"/> <br/>
                     <p:editor id="effReport" 
                               value="#{effortBean.report.reportDtl}"
                               binding="#{effReport}"
                               width="630"
+                              rendered="#{not empty actStartCal.submittedValue}"
                               required="true">
                     </p:editor>
                     <h:panelGrid columns="2" style="margin-top:10px">  
@@ -137,6 +147,7 @@
                                          value="Submit" 
                                          update=":addEffForm"
                                          immediate="true"
+                                         rendered="#{not empty actStartCal.submittedValue}"
                                          icon="ui-icon-disk"  />
                     </h:panelGrid> 
                 </p>
