@@ -100,7 +100,8 @@
                                 maxdate="#{currentDate}"
                                 mindate="#{actStartCal.submittedValue}"
                                 value="#{effortBean.activity.actDateTo}" 
-                                binding="#{addEffForm}"
+                                binding="#{actEndCal}"
+                                immediate="true"
                                 required="true" 
                                 size="10"
                                 disabled="#{empty effortBean.selectedProspect.prospectNo}"
@@ -132,7 +133,7 @@
                     actEndCal.localValue = #{actEndCal.localValue} <br/>
                     actEndCal.value= #{actEndCal.value} or #{effortBean.activity.actDateTo}<br/>
                 <h:outputText id="prompt2" 
-                              rendered="#{empty actStartCal.submittedValue}"
+                              rendered="#{not empty actStartCal.submittedValue}"
                               value="Recruitment Effort Narrative" 
                               style="font-size: 14px; font-weight: bold"/> <br/>
                     <p:editor id="effReport" 
