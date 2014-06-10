@@ -98,14 +98,14 @@
                                    for="actDateToLabel" />
                     <p:calendar id="actEndCal" 
                                 maxdate="#{currentDate}"
-                                mindate="#{actStartCal.submittedValue}"
+                                mindate="#{actStartCal.localValue}"
                                 value="#{effortBean.activity.actDateTo}" 
                                 binding="#{actEndCal}"
-                                immediate="true"
                                 required="true" 
                                 size="10"
                                 disabled="#{empty effortBean.selectedProspect.prospectNo}"
                                 pattern="MM/dd/yyyy" > 
+                        <p:ajax event="dateSelect" listener="#{effortBean.handleDateSelect}" process="addEffForm" update="addEffForm" />
                     </p:calendar>
                 </span>
                 <span style="margin-left:90px;">
@@ -124,23 +124,15 @@
                 </span>
                 <br/>
                 <p>
-                    <h:message for="actEndCal" />
-                    actStartCal.submittedValue = #{actStartCal.submittedValue} <br/>
-                    actStartCal.localValue = #{actStartCal.localValue} <br/>
-                    actStartCal.value= #{actStartCal.value} or effortBean.activity.actDateFrom= #{effortBean.activity.actDateFrom}<br/>
-                    lastName = #{effortBean.selectedProspect.lastName} <br/>
-                    actEndCal.submittedValue = #{actEndCal.submittedValue} <br/>
-                    actEndCal.localValue = #{actEndCal.localValue} <br/>
-                    actEndCal.value= #{actEndCal.value} or #{effortBean.activity.actDateTo}<br/>
                 <h:outputText id="prompt2" 
-                              rendered="#{not empty actStartCal.submittedValue}"
+                              rendered="#{not empty actStartCal.localValue}"
                               value="Recruitment Effort Narrative" 
                               style="font-size: 14px; font-weight: bold"/> <br/>
                     <p:editor id="effReport" 
                               value="#{effortBean.report.reportDtl}"
                               binding="#{effReport}"
                               width="630"
-                              rendered="#{not empty actStartCal.submittedValue}"
+                              rendered="#{not empty actStartCal.localValue}"
                               required="true">
                     </p:editor>
                     <h:panelGrid columns="2" style="margin-top:10px">  
@@ -148,7 +140,7 @@
                                          value="Submit" 
                                          update=":addEffForm"
                                          immediate="true"
-                                         rendered="#{not empty actStartCal.submittedValue}"
+                                         rendered="#{not empty actStartCal.localValue}"
                                          icon="ui-icon-disk"  />
                     </h:panelGrid> 
                 </p>
