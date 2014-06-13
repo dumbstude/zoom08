@@ -79,34 +79,40 @@
                     </span>
                     <br></br>
                 </p>
-                <h:outputLabel id="actDateFromLabel" 
-                               value="Activity Start Date : " 
-                               for="actDateFromLabel" />
-                <p:calendar id="actStartCal"
-                            maxdate="#{currentDate}"
-                            value="#{effortBean.activity.actDateFrom}"
-                            binding="#{addEffForm}"
-                            required="true" 
-                            readonlyInput="true"
-                            size="10"
-                            disabled="#{empty effortBean.selectedProspect.prospectNo}"
-                            pattern="MM/dd/yyyy" >
-                </p:calendar> 
-                <h:outputText id ="startDate" value="#{effortBean.activity.actDateFrom}"/>
+				<span>
+					<h:outputLabel id="actDateFromLabel" 
+								   value="Activity Start Date : " 
+								   for="actDateFromLabel" />
+					<p:calendar id="actStartCal"
+								maxdate="#{currentDate}"
+								value="#{effortBean.dateFrom}"
+								required="true" 
+								size="10"
+								readonlyInput="true"								
+								rendered="#{not empty effortBean.selectedProspect.prospectNo}"
+								pattern="MM/dd/yyyy" >
+						<p:ajax	event="dateSelect"
+								async="true"
+								listener="#{effortBean.dateChangeFrom}"
+								update=":addEffForm:actStartCal, :addEffForm:actEndCal"/>
+					</p:calendar> 
+				</span>
                 <span style="margin-left:35px;">
                     <h:outputLabel id="actDateEnd"  value="Activity End Date : " 
                                    for="actDateEnd" />
                     <p:calendar id="actEndCal" 
                                 maxdate="#{currentDate}"
-                                mindate="#{effortBean.activity.actDateFrom}"
-                                value="#{effortBean.activity.actDateTo}" 
+                                mindate="#{effortBean.dateFrom}"   
+                                value="#{effortBean.dateTo}"
                                 required="true" 
                                 size="10"
-                                immediate="false"
-                                readonly="true"
-                                binding="#{actEndCal}"
-                                disabled="#{empty effortBean.selectedProspect.prospectNo}"
-                                pattern="MM/dd/yyyy" > 
+                                readonlyInput="true"
+                                rendered="#{not empty effortBean.selectedProspect.prospectNo}"
+                                pattern="MM/dd/yyyy" >
+						<p:ajax event="dateSelect"
+								async="true"
+								listener="#{effortBean.dateChangeTo}"
+								update=":addEffForm"/>
                     </p:calendar>
                 </span>
                 <span style="margin-left:90px;">
@@ -128,7 +134,7 @@
                     <h4> Recruitment Effort Narrative </h4> <br/>
                     <p:editor id="effReport" 
                               value="#{effortBean.report.reportDtl}"
-                              binding="#{effReport}"
+							  rendered="#{not empty effortBean.dateTo}"
                               width="630"
                               required="true">
                     </p:editor>
@@ -137,13 +143,14 @@
                                          value="Submit" 
                                          update=":addEffForm"
                                          immediate="true"
-                                         icon="ui-icon-disk"  />
+                                         icon="ui-icon-disk"
+										 rendered="true"/>
                     </h:panelGrid> 
                 </p>
                 <br></br>
                 <prcc:effortForm prospect="#{effortBean.prospect}" 
                                  rendered="#{not empty effReport.submittedValue}"
-                                 canNotInput="false"  />
+                                 canNotInput="false"/>
             </h:form>
         </ui:define>
     </ui:composition>
