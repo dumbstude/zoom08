@@ -131,13 +131,14 @@
                 </span>
                 <br/>
                 <p>
-                    <h4> Recruitment Effort Narrative </h4> <br/>
+                    <h4><h:outputText value="Recruitment Effort Narrative" rendered="#{not empty effortBean.dateTo}"/></h4> <br/>
                     <p:editor id="effReport" 
                               value="#{effortBean.activity.actDetails}"
 							  rendered="#{not empty effortBean.dateTo}"
                               width="630"
 							  widgetVar="effDetail"
-                              required="true">						
+                              required="true">
+						<f:validateLength minimum="10"/>
                     </p:editor>
                     <!--
 					<h:panelGrid columns="2" style="margin-top:10px">  
@@ -199,8 +200,9 @@
 												 value="#{effortBean.social}">
 							<p:ajax async="true" update=":addEffForm:standingRate, :addEffForm:noresBox"/>
 						</h:selectBooleanCheckbox> Social standing  <br/>
-						<h:selectBooleanCheckbox id="noresBox" 
-												 value="#{effortBean.norating}">
+						<h:selectBooleanCheckbox id="noresBox"
+												 value="#{effortBean.norating}"
+												 disabled="#{effortBean.norating}">
 							<p:ajax async="true"
 									update=":addEffForm:noresBox,
 									:addEffForm:willingnessBox,
@@ -217,7 +219,7 @@
 					</div>
 					<div id="radio" style="height:180px; width:170px;float:left; ">
 						<h:selectOneRadio id="willingnessRate"  disabled="#{not effortBean.willing}" 
-										  value="willingness" >
+										  value="#{effortBean.willingnessRating}" >
 							<f:selectItem id="willing1" 
 										  itemValue="1" />
 							<f:selectItem id="willing2" 
@@ -231,7 +233,7 @@
 						</h:selectOneRadio>
 						<br/>
 						<h:selectOneRadio id="mutualHelpRate" 
-										  value="mutualHelp"
+										  value="#{effortBean.understandingRatingSub1}"
 										  disabled="#{not effortBean.understanding}">
 							<f:selectItem id="mutualHelp1"
 										  itemValue="1" />
@@ -245,7 +247,7 @@
 										  itemValue="5" />
 						</h:selectOneRadio>             
 						<h:selectOneRadio id="principlesRate"
-										  value="principles"
+										  value="#{effortBean.understandingRatingSub2}"
 										  disabled="#{not effortBean.understanding}">
 							<f:selectItem id="principles1" itemValue="1" />
 							<f:selectItem id="principles2" itemValue="2" />
@@ -254,7 +256,7 @@
 							<f:selectItem id="principles5" itemValue="5" />
 						</h:selectOneRadio>             
 						<h:selectOneRadio id="valuesRate"
-										  value="values"
+										  value="#{effortBean.understandingRatingSub3}"
 										  disabled="#{not effortBean.understanding}">
 							<f:selectItem id="values1" itemValue="1" />
 							<f:selectItem id="values2" itemValue="2" />
@@ -263,7 +265,7 @@
 							<f:selectItem id="values5" itemValue="5" />
 						</h:selectOneRadio>            
 						<h:selectOneRadio id="motivationRate"
-										  value="motivation"
+										  value="#{effortBean.motivatedRating}"
 										  disabled="#{not effortBean.motivated}">
 							<f:selectItem id="motivation1" itemValue="1" />
 							<f:selectItem id="motivation2" itemValue="2" />
@@ -272,7 +274,7 @@
 							<f:selectItem id="motivation5" itemValue="5" />
 						</h:selectOneRadio>             
 						<h:selectOneRadio id="standingRate"
-										  value="socialStanding"
+										  value="#{effortBean.socialRating}"
 										  disabled="#{not effortBean.social}">
 							<f:selectItem id="standing1" itemValue="1" />
 							<f:selectItem id="standing2" itemValue="2" />
@@ -290,13 +292,6 @@
 							<h:outputLabel for="ptMem" 
 										   value="PT Member-in-Charge" 
 										   style="margin:90px"/>
-							<p><span style="margin-left:90px;">
-									<h:commandButton value="  Save  " 
-													 action="#{effortBean.saveEffort}"  />
-									<h:commandButton value="Cancel" 
-													 action="/xhtml/mainEffort.xhtml" 
-													 immediate="true" />
-								</span></p>
 						</div>
 					</div>
 					<div id="legend" style="height:130px; width:350px; float:left" >
@@ -308,6 +303,19 @@
 						<h:outputText value="5 - Outstanding" /> <br/>
 					</div>
 				</p:panel>
+				<p>
+					<span style="margin-left:90px;">
+						<h:commandButton value="  Save  " 
+										 action="#{effortBean.saveEffort}"
+										 rendered="#{not empty effortBean.dateTo}"/>
+						<p:commandButton value="Cancel" 
+										 action="#{effortBean.reset}"
+										 ajax="false"
+										 immediate="true">
+							<p:resetInput target="addEffForm"/>
+						</p:commandButton>
+					</span>
+				</p>
 				<!---->
             </h:form>
         </ui:define>
