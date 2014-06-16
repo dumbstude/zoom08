@@ -133,10 +133,11 @@
                 <p>
                     <h4> Recruitment Effort Narrative </h4> <br/>
                     <p:editor id="effReport" 
-                              value="#{effortBean.report.reportDtl}"
+                              value="#{effortBean.activity.actDetails}"
 							  rendered="#{not empty effortBean.dateTo}"
                               width="630"
-                              required="true">
+							  widgetVar="effDetail"
+                              required="true">						
                     </p:editor>
                     <!--
 					<h:panelGrid columns="2" style="margin-top:10px">  
@@ -155,7 +156,7 @@
                                  rendered="#{not empty effortBean.dateTo}"
                                  canNotInput="false"/>
 				-->
-				<p:panel id="ratingPanel" rendered="#{not empty effortBean.dateTo}">
+				<p:panel id="ratingPanel" rendered="#{not empty effortBean.dateTo}" style="border: transparent;background-color: transparent">
 					<p>
 						<span style="margin-left:350px;"> Rating:</span><br/>
 						<span style="margin-left:344px;">1 </span>
