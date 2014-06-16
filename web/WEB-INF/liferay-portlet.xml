@@ -6,7 +6,7 @@
 		<portlet-name>zoom08</portlet-name>
 		<icon>/icon.png</icon>
 		<instanceable>false</instanceable>
-		<ajaxable>true</ajaxable>
+		<ajaxable>false</ajaxable>
 		<css-class-wrapper>zoom08-portlet</css-class-wrapper>
 	</portlet>
 	<role-mapper>

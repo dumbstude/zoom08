@@ -47,7 +47,21 @@ public class ApplicationConfig extends Application {
         resources.add(service.CoopReportFacadeREST.class);
         resources.add(service.CoopReportTypeFacadeREST.class);
         // following code can be used to customize Jersey 1.x JSON provider:
-        try {
+        // following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		try {
             Class jacksonProvider = Class.forName("org.codehaus.jackson.jaxrs.JacksonJsonProvider");
             resources.add(jacksonProvider);
         } catch (ClassNotFoundException ex) {

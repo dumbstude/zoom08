@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:composite="http://java.sun.com/jsf/composite"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
 
     <composite:interface>
         <composite:attribute name="prospect"/>
@@ -18,17 +19,22 @@
             <span style="margin-left:5px;">3 </span>
             <span style="margin-left:5px;">4 </span>
             <span style="margin-left:5px;">5 </span>
-
             <br/></p>
-        <div id="checkboxes" 
-             style="height:180px; width:326px; margin-left:15px;float:left" >
+        <div id="checkboxes" style="height:180px; width:326px; margin-left:15px;float:left">
+			<!-- Checkbox validators to enable radio buttons for rating -->
             <h:selectBooleanCheckbox id="willingnessBox" 
-                                     value="willingness" >
-                                     <f:ajax />
-            </h:selectBooleanCheckbox>  
-            Willingness, receptiveness, and interest <br/>
+                                     value="#{effortBean.willing}">
+				<p:ajax async="true" update=":addEffForm:willingnessRate, :addEffForm:noresBox"/>
+            </h:selectBooleanCheckbox> Willingness, receptiveness, and interest <br/>
             <h:selectBooleanCheckbox id="understandingBox" 
-                                     value="understanding" />   Understanding about the Cooperative  <br/>
+									 value="#{effortBean.understanding}">
+				<p:ajax async="true"
+						update=":addEffForm:understandingRate,
+						:addEffForm:noresBox,
+						:addEffForm:mutualHelpRate,
+						:addEffForm:principlesRate,
+						:addEffForm:valuesRate"/>
+			</h:selectBooleanCheckbox> Understanding about the Cooperative  <br/>
             <span style="margin-left:50px;"> 
                 <h:outputLabel id="mutualhelp" 
                                value="Mutual help and the Cooperative Movement" 
@@ -42,14 +48,20 @@
                                value="Cooperative values" 
                                for="values"/> </span> <br/>
             <h:selectBooleanCheckbox id="motivationBox" 
-                                     value="motivation" />   Inspiration and motivation <br/>
-            <h:selectBooleanCheckbox id="standingBox" 
-                                     value="standing" />   Social standing  <br/>
+									 value="#{effortBean.motivated}">
+				<p:ajax async="true" update=":addEffForm:motivationRate, :addEffForm:noresBox"/>	 
+			</h:selectBooleanCheckbox> Inspiration and motivation <br/>
+            <h:selectBooleanCheckbox id="standingBox"
+									 value="#{effortBean.social}">
+				<p:ajax async="true" update=":addEffForm:standingRate, :addEffForm:noresBox"/>
+			</h:selectBooleanCheckbox> Social standing  <br/>
             <h:selectBooleanCheckbox id="noresBox" 
-                                     value="nores" />   No result <br/>
+									 value="#{effortBean.norating}">
+				<p:ajax async="true"/>
+			</h:selectBooleanCheckbox> No result <br/>
         </div>
         <div id="radio" style="height:180px; width:170px;float:left; ">
-            <h:selectOneRadio id="willingnessRate"  disabled="#{empty willingnessBox}" 
+            <h:selectOneRadio id="willingnessRate"  disabled="#{not effortBean.willing}" 
                               value="willingness" >
                 <f:selectItem id="willing1" 
                               itemValue="1" />
@@ -64,15 +76,22 @@
             </h:selectOneRadio>
             <br/>
             <h:selectOneRadio id="mutualHelpRate" 
-                              value="mutualHelp">
-                <f:selectItem id="mutualHelp1" itemValue="1" />
-                <f:selectItem id="mutualHelp2" itemValue="2" />
-                <f:selectItem id="mutualHelp3" itemValue="3" />
-                <f:selectItem id="mutualHelp4" itemValue="4" />
-                <f:selectItem id="mutualHelp5" itemValue="5" />
+                              value="mutualHelp"
+							  disabled="#{not effortBean.understanding}">
+                <f:selectItem id="mutualHelp1"
+							  itemValue="1" />
+                <f:selectItem id="mutualHelp2"
+							  itemValue="2" />
+                <f:selectItem id="mutualHelp3"
+							  itemValue="3" />
+                <f:selectItem id="mutualHelp4"
+							  itemValue="4" />
+                <f:selectItem id="mutualHelp5"
+							  itemValue="5" />
             </h:selectOneRadio>             
             <h:selectOneRadio id="principlesRate"
-                              value="principles">
+                              value="principles"
+							  disabled="#{not effortBean.understanding}">
                 <f:selectItem id="principles1" itemValue="1" />
                 <f:selectItem id="principles2" itemValue="2" />
                 <f:selectItem id="principles3" itemValue="3" />
@@ -80,7 +99,8 @@
                 <f:selectItem id="principles5" itemValue="5" />
             </h:selectOneRadio>             
             <h:selectOneRadio id="valuesRate"
-                              value="values">
+                              value="values"
+							  disabled="#{not effortBean.understanding}">
                 <f:selectItem id="values1" itemValue="1" />
                 <f:selectItem id="values2" itemValue="2" />
                 <f:selectItem id="values3" itemValue="3" />

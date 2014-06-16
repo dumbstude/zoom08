@@ -27,36 +27,37 @@ import model.CoopProsCriteria;
 import model.CoopProsCriteriaMain;
 import model.CoopProsCriteriaSub;
 import model.CoopProsLog;
-import model.CoopProspect;
 import model.CoopProsRating;
 import model.CoopProsReport;
 import model.CoopProsRepver;
+import model.CoopProspect;
 import model.CoopRepAct;
 import model.CoopReport;
 import model.CoopReportCirc;
 import model.CoopReportType;
+import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.SelectEvent;
-import service.CoopActivityFacadeREST;
 import service.CoopActivityAttendeeFacadeREST;
+import service.CoopActivityFacadeREST;
+import service.CoopActivityTypeFacadeREST;
 import service.CoopApplicantFacadeREST;
 import service.CoopMemActFacadeREST;
 import service.CoopMemberFacadeREST;
 import service.CoopOrgPlanFacadeREST;
 import service.CoopOrgUnitFacadeREST;
-import service.CoopActivityTypeFacadeREST;
 import service.CoopOuActFacadeREST;
 import service.CoopProsActFacadeREST;
 import service.CoopProsCriteriaFacadeREST;
 import service.CoopProsCriteriaMainFacadeREST;
 import service.CoopProsCriteriaSubFacadeREST;
 import service.CoopProsLogFacadeREST;
-import service.CoopProspectFacadeREST;
 import service.CoopProsRatingFacadeREST;
 import service.CoopProsReportFacadeREST;
 import service.CoopProsRepverFacadeREST;
+import service.CoopProspectFacadeREST;
 import service.CoopRepActFacadeREST;
-import service.CoopReportFacadeREST;
 import service.CoopReportCircFacadeREST;
+import service.CoopReportFacadeREST;
 import service.CoopReportTypeFacadeREST;
 
 /**
@@ -67,54 +68,61 @@ import service.CoopReportTypeFacadeREST;
 @SessionScoped
 public class EffortBean implements Serializable {
 
-    @EJB
-    private CoopActivityFacadeREST coopActivityFacadeREST;
-    private CoopActivity activity;
-    private CoopActivityAttendeeFacadeREST coopActivityAttendeeFacadeREST;
+   
+    @EJB private CoopActivityFacadeREST coopActivityFacadeREST;
+	private CoopActivity activity;
+    @EJB private CoopActivityAttendeeFacadeREST coopActivityAttendeeFacadeREST;
     private CoopActivityAttendee activityAttendee;
-    private CoopActivityTypeFacadeREST coopActivityTypeFacadeREST;
+    @EJB private CoopActivityTypeFacadeREST coopActivityTypeFacadeREST;
     private CoopActivityType activityType;
-    private CoopApplicantFacadeREST coopApplicantFacadeREST;
+    @EJB private CoopApplicantFacadeREST coopApplicantFacadeREST;
     private CoopApplicant applicant;
-    private CoopMemActFacadeREST coopMemActFacadeREST;
+    @EJB private CoopMemActFacadeREST coopMemActFacadeREST;
     private CoopMemAct memAct;
-    private CoopMemberFacadeREST coopMemberFacadeREST;
+    @EJB private CoopMemberFacadeREST coopMemberFacadeREST;
     private CoopMember member;
-    private CoopOrgPlanFacadeREST coopOrgPlanFacadeREST;
+    @EJB private CoopOrgPlanFacadeREST coopOrgPlanFacadeREST;
     private CoopOrgPlan orgPlan;
-    private CoopOrgUnitFacadeREST coopOrgUnitFacadeREST;
+    @EJB private CoopOrgUnitFacadeREST coopOrgUnitFacadeREST;
     private CoopOrgUnit orgUnit;
-    private CoopOuActFacadeREST coopOuActFacadeREST;
+    @EJB private CoopOuActFacadeREST coopOuActFacadeREST;
     private CoopOuAct ouAct;
-    private CoopProsActFacadeREST coopProsActFacadeREST;
+    @EJB private CoopProsActFacadeREST coopProsActFacadeREST;
     private CoopProsAct prosAct;
-    private CoopProsCriteriaFacadeREST coopProsCriteriaFacadeREST;
+    @EJB private CoopProsCriteriaFacadeREST coopProsCriteriaFacadeREST;
     private CoopProsCriteria prosCriteria;
-    private CoopProsCriteriaMainFacadeREST coopProsCriteriaMainFacadeREST;
+    @EJB private CoopProsCriteriaMainFacadeREST coopProsCriteriaMainFacadeREST;
     private CoopProsCriteriaMain prosCriteriaMain;
-    private CoopProsCriteriaSubFacadeREST coopProsCriteriaSubFacadeREST;
+    @EJB private CoopProsCriteriaSubFacadeREST coopProsCriteriaSubFacadeREST;
     private CoopProsCriteriaSub prosCriteriaSub;
-    private CoopProsLogFacadeREST coopProsLogFacadeREST;
+    @EJB private CoopProsLogFacadeREST coopProsLogFacadeREST;
     private CoopProsLog prosLog;
-    private CoopProspectFacadeREST coopProspectFacadeREST;
+    @EJB private CoopProspectFacadeREST coopProspectFacadeREST;
     private CoopProspect prospect;
     private List<CoopProspect> prospectList;
     private CoopProspect selectedProspect;
     private DataModel<CoopProspect> prospectModel;
-    private CoopProsRatingFacadeREST coopProsRatingFacadeREST;
+    @EJB private CoopProsRatingFacadeREST coopProsRatingFacadeREST;
     private CoopProsRating prosRating;
-    private CoopProsReportFacadeREST coopProsReportFacadeREST;
+    @EJB private CoopProsReportFacadeREST coopProsReportFacadeREST;
     private CoopProsReport prosReport;
-    private CoopRepActFacadeREST coopRepActFacadeREST;
+    @EJB private CoopRepActFacadeREST coopRepActFacadeREST;
     private CoopRepAct repAct;
-    private CoopReportFacadeREST coopReportFacadeREST;
+    @EJB private CoopReportFacadeREST coopReportFacadeREST;
     private CoopReport report;
-    private CoopReportCircFacadeREST coopReportCircFacadeREST;
+    @EJB private CoopReportCircFacadeREST coopReportCircFacadeREST;
     private CoopReportCirc reportCirc;
-    private CoopReportTypeFacadeREST coopReportTypeFacadeREST;
+    @EJB private CoopReportTypeFacadeREST coopReportTypeFacadeREST;
     private CoopReportType reportType;
-    private CoopProsRepverFacadeREST coopProsRepverFacadeREST;
+    @EJB private CoopProsRepverFacadeREST coopProsRepverFacadeREST;
     private CoopProsRepver prosRepver;
+	private Date dateFrom;
+	private Date dateTo;
+	private boolean willing;
+	private boolean understanding;
+	private boolean motivated;
+	private boolean social;
+	private boolean norating;
 
     public void init() {
         activity = new CoopActivity();
@@ -159,7 +167,8 @@ public class EffortBean implements Serializable {
         return orgPlan;
     }
 
-    public CoopOrgUnit getOrgUnit() {
+    
+	public CoopOrgUnit getOrgUnit() {
         return orgUnit;
     }
 
@@ -329,7 +338,7 @@ public class EffortBean implements Serializable {
     }
 
     public void handleDateSelect(SelectEvent event) {
-        Date date = (Date) event.getObject();
+        Date date = (Date)event.getObject();
     }
 
     public CoopProsCriteriaSub getProsCriteriaSub() {
@@ -363,6 +372,81 @@ public class EffortBean implements Serializable {
         reportCirc = new CoopReportCirc();
         coopReportTypeFacadeREST.edit(reportType);
         reportType = new CoopReportType();
+		activity.setActDateTo(dateTo);
         return "mainEffort";
     }
+	
+	public Date getDateFrom() {
+		return dateFrom;
+	}
+	
+	public void setDateFrom(Date dayFrom){
+		this.dateFrom = dayFrom;
+	}
+	
+	public Date getDateTo() {
+		return dateTo;
+	}
+	
+	public void setDateTo(Date dayTo){
+		this.dateTo = dayTo;
+	}
+	
+	public void dateChangeFrom(SelectEvent e) {
+		this.dateFrom = (Date)e.getObject();
+		activity.setActDateFrom(dateFrom);
+	}
+	
+	public void dateChangeTo(SelectEvent e) {
+		this.dateTo = (Date)e.getObject();
+		activity.setActDateTo(dateTo);		
+	}
+
+	public boolean isWilling() {
+		return willing;
+	}
+
+	public void setWilling(boolean willing) {
+		norating = false;
+		this.willing = willing;
+	}
+
+	public boolean isUnderstanding() {
+		return understanding;
+	}
+
+	public void setUnderstanding(boolean understanding) {
+		norating = false;
+		this.understanding = understanding;
+	}
+
+	public boolean isMotivated() {
+		return motivated;
+	}
+
+	public void setMotivated(boolean motivated) {
+		norating = false;
+		this.motivated = motivated;
+	}
+
+	public boolean isSocial() {
+		return social;
+	}
+
+	public void setSocial(boolean social) {
+		norating = false;
+		this.social = social;
+	}
+
+	public boolean isNorating() {
+		return norating;
+	}
+
+	public void setNorating(boolean norating) {
+		willing = false;
+		understanding = false;
+		motivated = false;
+		social = false;
+		this.norating = norating;
+	}	
 }

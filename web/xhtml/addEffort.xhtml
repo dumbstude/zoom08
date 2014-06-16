@@ -138,7 +138,8 @@
                               width="630"
                               required="true">
                     </p:editor>
-                    <h:panelGrid columns="2" style="margin-top:10px">  
+                    <!--
+					<h:panelGrid columns="2" style="margin-top:10px">  
                         <p:commandButton id="submitButton"  
                                          value="Submit" 
                                          update=":addEffForm"
@@ -146,11 +147,167 @@
                                          icon="ui-icon-disk"
 										 rendered="true"/>
                     </h:panelGrid> 
+					-->
                 </p>
                 <br></br>
-                <prcc:effortForm prospect="#{effortBean.prospect}" 
-                                 rendered="#{not empty effReport.submittedValue}"
+                <!--
+				<prcc:effortForm prospect="#{effortBean.prospect}" 
+                                 rendered="#{not empty effortBean.dateTo}"
                                  canNotInput="false"/>
+				-->
+				<p:panel id="ratingPanel" rendered="#{not empty effortBean.dateTo}">
+					<p>
+						<span style="margin-left:350px;"> Rating:</span><br/>
+						<span style="margin-left:344px;">1 </span>
+						<span style="margin-left:5px;">2 </span>
+						<span style="margin-left:5px;">3 </span>
+						<span style="margin-left:5px;">4 </span>
+						<span style="margin-left:5px;">5 </span>
+						<br/></p>
+					<div id="checkboxes" style="height:180px; width:326px; margin-left:15px;float:left">
+						<!-- Checkbox validators to enable radio buttons for rating -->
+						<h:selectBooleanCheckbox id="willingnessBox" 
+												 value="#{effortBean.willing}">
+							<p:ajax async="true" update=":addEffForm:willingnessRate, :addEffForm:noresBox"/>
+						</h:selectBooleanCheckbox> Willingness, receptiveness, and interest <br/>
+						<h:selectBooleanCheckbox id="understandingBox" 
+												 value="#{effortBean.understanding}">
+							<p:ajax async="true"
+									update=":addEffForm:noresBox,
+									:addEffForm:mutualHelpRate,
+									:addEffForm:principlesRate,
+									:addEffForm:valuesRate"/>
+						</h:selectBooleanCheckbox> Understanding about the Cooperative  <br/>
+						<span style="margin-left:50px;"> 
+							<h:outputLabel id="mutualhelp" 
+										   value="Mutual help and the Cooperative Movement" 
+										   for ="mutualhelp"/></span> <br/>
+						<span style="margin-left:50px;"> 
+							<h:outputLabel id="principles" 
+										   value="Introduction to Cooperative Principles" 
+										   for ="principles"/> </span> <br/>
+						<span style="margin-left:50px;"> 
+							<h:outputLabel id="values" 
+										   value="Cooperative values" 
+										   for="values"/> </span> <br/>
+						<h:selectBooleanCheckbox id="motivationBox" 
+												 value="#{effortBean.motivated}">
+							<p:ajax async="true" update=":addEffForm:motivationRate, :addEffForm:noresBox"/>	 
+						</h:selectBooleanCheckbox> Inspiration and motivation <br/>
+						<h:selectBooleanCheckbox id="standingBox"
+												 value="#{effortBean.social}">
+							<p:ajax async="true" update=":addEffForm:standingRate, :addEffForm:noresBox"/>
+						</h:selectBooleanCheckbox> Social standing  <br/>
+						<h:selectBooleanCheckbox id="noresBox" 
+												 value="#{effortBean.norating}">
+							<p:ajax async="true"
+									update=":addEffForm:noresBox,
+									:addEffForm:willingnessBox,
+									:addEffForm:understandingBox,
+									:addEffForm:motivationBox,
+									:addEffForm:standingBox,
+									:addEffForm:willingnessRate
+									:addEffForm:mutualHelpRate,
+									:addEffForm:principlesRate,
+									:addEffForm:valuesRate,
+									:addEffForm:motivationRate,
+									:addEffForm:standingRate"/>
+						</h:selectBooleanCheckbox> No result <br/>
+					</div>
+					<div id="radio" style="height:180px; width:170px;float:left; ">
+						<h:selectOneRadio id="willingnessRate"  disabled="#{not effortBean.willing}" 
+										  value="willingness" >
+							<f:selectItem id="willing1" 
+										  itemValue="1" />
+							<f:selectItem id="willing2" 
+										  itemValue="2" />
+							<f:selectItem id="willing3" 
+										  itemValue="3" />
+							<f:selectItem id="willing4" 
+										  itemValue="4" />
+							<f:selectItem id="willing5"  
+										  itemValue="5" />
+						</h:selectOneRadio>
+						<br/>
+						<h:selectOneRadio id="mutualHelpRate" 
+										  value="mutualHelp"
+										  disabled="#{not effortBean.understanding}">
+							<f:selectItem id="mutualHelp1"
+										  itemValue="1" />
+							<f:selectItem id="mutualHelp2"
+										  itemValue="2" />
+							<f:selectItem id="mutualHelp3"
+										  itemValue="3" />
+							<f:selectItem id="mutualHelp4"
+										  itemValue="4" />
+							<f:selectItem id="mutualHelp5"
+										  itemValue="5" />
+						</h:selectOneRadio>             
+						<h:selectOneRadio id="principlesRate"
+										  value="principles"
+										  disabled="#{not effortBean.understanding}">
+							<f:selectItem id="principles1" itemValue="1" />
+							<f:selectItem id="principles2" itemValue="2" />
+							<f:selectItem id="principles3" itemValue="3" />
+							<f:selectItem id="principles4" itemValue="4" />
+							<f:selectItem id="principles5" itemValue="5" />
+						</h:selectOneRadio>             
+						<h:selectOneRadio id="valuesRate"
+										  value="values"
+										  disabled="#{not effortBean.understanding}">
+							<f:selectItem id="values1" itemValue="1" />
+							<f:selectItem id="values2" itemValue="2" />
+							<f:selectItem id="values3" itemValue="3" />
+							<f:selectItem id="values4" itemValue="4" />
+							<f:selectItem id="values5" itemValue="5" />
+						</h:selectOneRadio>            
+						<h:selectOneRadio id="motivationRate"
+										  value="motivation"
+										  disabled="#{not effortBean.motivated}">
+							<f:selectItem id="motivation1" itemValue="1" />
+							<f:selectItem id="motivation2" itemValue="2" />
+							<f:selectItem id="motivation3" itemValue="3" />
+							<f:selectItem id="motivation4" itemValue="4" />
+							<f:selectItem id="motivation5" itemValue="5" />
+						</h:selectOneRadio>             
+						<h:selectOneRadio id="standingRate"
+										  value="socialStanding"
+										  disabled="#{not effortBean.social}">
+							<f:selectItem id="standing1" itemValue="1" />
+							<f:selectItem id="standing2" itemValue="2" />
+							<f:selectItem id="standing3" itemValue="3" />
+							<f:selectItem id="standing4" itemValue="4" />
+							<f:selectItem id="standing5" itemValue="5" />
+						</h:selectOneRadio>       
+						<div id="ptmem" style="height:180px; width:290px;float:left; ">
+							<h:inputText id="ptMem" 
+										 label="PT member in charge" 
+										 size="40" 
+										 required="true"
+										 value="#{effortBean.report.memIdNo}"
+										 style="margin:20px"/>
+							<h:outputLabel for="ptMem" 
+										   value="PT Member-in-Charge" 
+										   style="margin:90px"/>
+							<p><span style="margin-left:90px;">
+									<h:commandButton value="  Save  " 
+													 action="#{effortBean.saveEffort}"  />
+									<h:commandButton value="Cancel" 
+													 action="/xhtml/mainEffort.xhtml" 
+													 immediate="true" />
+								</span></p>
+						</div>
+					</div>
+					<div id="legend" style="height:130px; width:350px; float:left" >
+						<h:outputText value="Legend:" /> <br/><br/>
+						<h:outputText value="1 - Poor" /> <br/>
+						<h:outputText value="2 - Needs improvement" /> <br/>
+						<h:outputText value="3 - Average" /> <br/>
+						<h:outputText value="4 - Satisfactory" /> <br/>
+						<h:outputText value="5 - Outstanding" /> <br/>
+					</div>
+				</p:panel>
+				<!---->
             </h:form>
         </ui:define>
     </ui:composition>
