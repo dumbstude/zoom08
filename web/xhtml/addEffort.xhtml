@@ -119,9 +119,8 @@
                     <h:outputLabel id="rprtDateEnc"
                                    for="rprtDateEnc" 
                                    value="Report Date  : " />
-                    <h:inputText id="repEncDate" 
-                                 binding="#{rprtDateEnc}"
-                                 value="#{effortBean.report.reportDateEncoded}"
+                    <h:inputText id="repEncDate"
+                                 value="#{currentDate}"
                                  required="true" 
                                  size="10"
                                  readonly="true"
