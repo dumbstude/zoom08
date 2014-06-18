@@ -18,60 +18,60 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import model.CoopOrgUnit;
+import model.CoopProsRatingMain;
 
 /**
  *
  * @author mis
  */
 @Stateless
-@Path("model.cooporgunit")
-public class CoopOrgUnitFacadeREST extends AbstractFacade<CoopOrgUnit> {
+@Path("model.coopprosratingmain")
+public class CoopProsRatingMainFacadeREST extends AbstractFacade<CoopProsRatingMain> {
 	@PersistenceContext(unitName = "zoom08PU")
 	private EntityManager em;
 
-	public CoopOrgUnitFacadeREST() {
-		super(CoopOrgUnit.class);
+	public CoopProsRatingMainFacadeREST() {
+		super(CoopProsRatingMain.class);
 	}
 
 	@POST
     @Override
     @Consumes({"application/xml", "application/json"})
-	public void create(CoopOrgUnit entity) {
+	public void create(CoopProsRatingMain entity) {
 		super.create(entity);
 	}
 
 	@PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-	public void edit(@PathParam("id") String id, CoopOrgUnit entity) {
+	public void edit(@PathParam("id") Integer id, CoopProsRatingMain entity) {
 		super.edit(entity);
 	}
 
 	@DELETE
     @Path("{id}")
-	public void remove(@PathParam("id") String id) {
+	public void remove(@PathParam("id") Integer id) {
 		super.remove(super.find(id));
 	}
 
 	@GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-	public CoopOrgUnit find(@PathParam("id") String id) {
+	public CoopProsRatingMain find(@PathParam("id") Integer id) {
 		return super.find(id);
 	}
 
 	@GET
     @Override
     @Produces({"application/xml", "application/json"})
-	public List<CoopOrgUnit> findAll() {
+	public List<CoopProsRatingMain> findAll() {
 		return super.findAll();
 	}
 
 	@GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-	public List<CoopOrgUnit> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+	public List<CoopProsRatingMain> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
 		return super.findRange(new int[]{from, to});
 	}
 

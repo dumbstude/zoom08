@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package service;
 
 import java.util.List;
@@ -20,69 +22,69 @@ import model.CoopProsCriteria;
 
 /**
  *
- * @author roland
+ * @author mis
  */
 @Stateless
 @Path("model.coopproscriteria")
 public class CoopProsCriteriaFacadeREST extends AbstractFacade<CoopProsCriteria> {
-    @PersistenceContext(unitName = "zoom08PU")
-    private EntityManager em;
+	@PersistenceContext(unitName = "zoom08PU")
+	private EntityManager em;
 
-    public CoopProsCriteriaFacadeREST() {
-        super(CoopProsCriteria.class);
-    }
+	public CoopProsCriteriaFacadeREST() {
+		super(CoopProsCriteria.class);
+	}
 
-    @POST
+	@POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(CoopProsCriteria entity) {
-        super.create(entity);
-    }
+	public void create(CoopProsCriteria entity) {
+		super.create(entity);
+	}
 
-    @PUT
-    @Override
+	@PUT
+    @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(CoopProsCriteria entity) {
-        super.edit(entity);
-    }
+	public void edit(@PathParam("id") Integer id, CoopProsCriteria entity) {
+		super.edit(entity);
+	}
 
-    @DELETE
+	@DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
-    }
+	public void remove(@PathParam("id") Integer id) {
+		super.remove(super.find(id));
+	}
 
-    @GET
+	@GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public CoopProsCriteria find(@PathParam("id") Integer id) {
-        return super.find(id);
-    }
+	public CoopProsCriteria find(@PathParam("id") Integer id) {
+		return super.find(id);
+	}
 
-    @GET
+	@GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<CoopProsCriteria> findAll() {
-        return super.findAll();
-    }
+	public List<CoopProsCriteria> findAll() {
+		return super.findAll();
+	}
 
-    @GET
+	@GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<CoopProsCriteria> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
+	public List<CoopProsCriteria> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+		return super.findRange(new int[]{from, to});
+	}
 
-    @GET
+	@GET
     @Path("count")
     @Produces("text/plain")
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
+	public String countREST() {
+		return String.valueOf(super.count());
+	}
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-    
+	@Override
+	protected EntityManager getEntityManager() {
+		return em;
+	}
+	
 }

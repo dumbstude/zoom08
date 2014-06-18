@@ -24,30 +24,34 @@ public class ApplicationConfig extends Application {
      */
     private Set<Class<?>> getRestResourceClasses() {
         Set<Class<?>> resources = new java.util.HashSet<Class<?>>();
-        resources.add(service.CoopActivityAttendeeFacadeREST.class);
-        resources.add(service.CoopActivityFacadeREST.class);
-        resources.add(service.CoopActivityTypeFacadeREST.class);
-        resources.add(service.CoopApplicantFacadeREST.class);
-        resources.add(service.CoopMemActFacadeREST.class);
-        resources.add(service.CoopMemberFacadeREST.class);
-        resources.add(service.CoopOrgPlanFacadeREST.class);
-        resources.add(service.CoopOrgUnitFacadeREST.class);
-        resources.add(service.CoopOuActFacadeREST.class);
-        resources.add(service.CoopProsActFacadeREST.class);
-        resources.add(service.CoopProsCriteriaFacadeREST.class);
-        resources.add(service.CoopProsCriteriaMainFacadeREST.class);
-        resources.add(service.CoopProsCriteriaSubFacadeREST.class);
-        resources.add(service.CoopProsLogFacadeREST.class);
-        resources.add(service.CoopProsRatingFacadeREST.class);
-        resources.add(service.CoopProsReportFacadeREST.class);
-        resources.add(service.CoopProsRepverFacadeREST.class);
-        resources.add(service.CoopProspectFacadeREST.class);
-        resources.add(service.CoopRepActFacadeREST.class);
-        resources.add(service.CoopReportCircFacadeREST.class);
-        resources.add(service.CoopReportFacadeREST.class);
-        resources.add(service.CoopReportTypeFacadeREST.class);
+		resources.add(service.CoopActivityFacadeREST.class);
+		resources.add(service.CoopActivityTypeFacadeREST.class);
+		resources.add(service.CoopApplicantFacadeREST.class);
+		resources.add(service.CoopMemActFacadeREST.class);
+		resources.add(service.CoopMemberFacadeREST.class);
+		resources.add(service.CoopOrgPlanFacadeREST.class);
+		resources.add(service.CoopOrgUnitFacadeREST.class);
+		resources.add(service.CoopOuActFacadeREST.class);
+		resources.add(service.CoopProsActFacadeREST.class);
+		resources.add(service.CoopProsCriteriaFacadeREST.class);
+		resources.add(service.CoopProsCriteriaMainFacadeREST.class);
+		resources.add(service.CoopProsCriteriaSubFacadeREST.class);
+		resources.add(service.CoopProsLogFacadeREST.class);
+		resources.add(service.CoopProsRatingMainFacadeREST.class);
+		resources.add(service.CoopProsRatingSubFacadeREST.class);
+		resources.add(service.CoopProsReportFacadeREST.class);
+		resources.add(service.CoopProsRepverFacadeREST.class);
+		resources.add(service.CoopProspectFacadeREST.class);
+		resources.add(service.CoopRepActFacadeREST.class);
+		resources.add(service.CoopReportCircFacadeREST.class);
+		resources.add(service.CoopReportFacadeREST.class);
+		resources.add(service.CoopReportTypeFacadeREST.class);
         // following code can be used to customize Jersey 1.x JSON provider:
         // following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
+		// following code can be used to customize Jersey 1.x JSON provider:
 		// following code can be used to customize Jersey 1.x JSON provider:
 		// following code can be used to customize Jersey 1.x JSON provider:
 		// following code can be used to customize Jersey 1.x JSON provider:

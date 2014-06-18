@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package model;
 
 import java.io.Serializable;
@@ -24,105 +26,105 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author roland
+ * @author mis
  */
 @Entity
 @Table(name = "coop_pros_criteria_sub")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CoopProsCriteriaSub.findAll", query = "SELECT c FROM CoopProsCriteriaSub c"),
-    @NamedQuery(name = "CoopProsCriteriaSub.findBySubCriteriaNo", query = "SELECT c FROM CoopProsCriteriaSub c WHERE c.subCriteriaNo = :subCriteriaNo"),
-    @NamedQuery(name = "CoopProsCriteriaSub.findBySubCriteriaDtl", query = "SELECT c FROM CoopProsCriteriaSub c WHERE c.subCriteriaDtl = :subCriteriaDtl"),
-    @NamedQuery(name = "CoopProsCriteriaSub.findBySubCriteriaRecno", query = "SELECT c FROM CoopProsCriteriaSub c WHERE c.subCriteriaRecno = :subCriteriaRecno")})
+	@NamedQuery(name = "CoopProsCriteriaSub.findAll", query = "SELECT c FROM CoopProsCriteriaSub c"),
+	@NamedQuery(name = "CoopProsCriteriaSub.findBySubCriteriaNo", query = "SELECT c FROM CoopProsCriteriaSub c WHERE c.subCriteriaNo = :subCriteriaNo"),
+	@NamedQuery(name = "CoopProsCriteriaSub.findBySubCriteriaDtl", query = "SELECT c FROM CoopProsCriteriaSub c WHERE c.subCriteriaDtl = :subCriteriaDtl"),
+	@NamedQuery(name = "CoopProsCriteriaSub.findBySubCriteriaNum", query = "SELECT c FROM CoopProsCriteriaSub c WHERE c.subCriteriaNum = :subCriteriaNum")})
 public class CoopProsCriteriaSub implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Column(name = "sub_criteria_no")
-    private Integer subCriteriaNo;
-    @Size(max = 2147483647)
+	private static final long serialVersionUID = 1L;
+	@Column(name = "sub_criteria_no")
+	private Integer subCriteriaNo;
+	@Size(max = 2147483647)
     @Column(name = "sub_criteria_dtl")
-    private String subCriteriaDtl;
-    @Id
+	private String subCriteriaDtl;
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "sub_criteria_recno")
-    private Integer subCriteriaRecno;
-    @OneToMany(mappedBy = "subCriteriaRecno")
-    private Collection<CoopProsRating> coopProsRatingCollection;
-    @JoinColumn(name = "criteria_main_recno", referencedColumnName = "criteria_main_recno")
+    @Column(name = "sub_criteria_num")
+	private Integer subCriteriaNum;
+	@JoinColumn(name = "criteria_main_num", referencedColumnName = "criteria_main_num")
     @ManyToOne
-    private CoopProsCriteriaMain criteriaMainRecno;
+	private CoopProsCriteriaMain criteriaMainNum;
+	@OneToMany(mappedBy = "subCriteriaNum")
+	private Collection<CoopProsRatingSub> coopProsRatingSubCollection;
 
-    public CoopProsCriteriaSub() {
-    }
+	public CoopProsCriteriaSub() {
+	}
 
-    public CoopProsCriteriaSub(Integer subCriteriaRecno) {
-        this.subCriteriaRecno = subCriteriaRecno;
-    }
+	public CoopProsCriteriaSub(Integer subCriteriaNum) {
+		this.subCriteriaNum = subCriteriaNum;
+	}
 
-    public Integer getSubCriteriaNo() {
-        return subCriteriaNo;
-    }
+	public Integer getSubCriteriaNo() {
+		return subCriteriaNo;
+	}
 
-    public void setSubCriteriaNo(Integer subCriteriaNo) {
-        this.subCriteriaNo = subCriteriaNo;
-    }
+	public void setSubCriteriaNo(Integer subCriteriaNo) {
+		this.subCriteriaNo = subCriteriaNo;
+	}
 
-    public String getSubCriteriaDtl() {
-        return subCriteriaDtl;
-    }
+	public String getSubCriteriaDtl() {
+		return subCriteriaDtl;
+	}
 
-    public void setSubCriteriaDtl(String subCriteriaDtl) {
-        this.subCriteriaDtl = subCriteriaDtl;
-    }
+	public void setSubCriteriaDtl(String subCriteriaDtl) {
+		this.subCriteriaDtl = subCriteriaDtl;
+	}
 
-    public Integer getSubCriteriaRecno() {
-        return subCriteriaRecno;
-    }
+	public Integer getSubCriteriaNum() {
+		return subCriteriaNum;
+	}
 
-    public void setSubCriteriaRecno(Integer subCriteriaRecno) {
-        this.subCriteriaRecno = subCriteriaRecno;
-    }
+	public void setSubCriteriaNum(Integer subCriteriaNum) {
+		this.subCriteriaNum = subCriteriaNum;
+	}
 
-    @XmlTransient
-    public Collection<CoopProsRating> getCoopProsRatingCollection() {
-        return coopProsRatingCollection;
-    }
+	public CoopProsCriteriaMain getCriteriaMainNum() {
+		return criteriaMainNum;
+	}
 
-    public void setCoopProsRatingCollection(Collection<CoopProsRating> coopProsRatingCollection) {
-        this.coopProsRatingCollection = coopProsRatingCollection;
-    }
+	public void setCriteriaMainNum(CoopProsCriteriaMain criteriaMainNum) {
+		this.criteriaMainNum = criteriaMainNum;
+	}
 
-    public CoopProsCriteriaMain getCriteriaMainRecno() {
-        return criteriaMainRecno;
-    }
+	@XmlTransient
+	public Collection<CoopProsRatingSub> getCoopProsRatingSubCollection() {
+		return coopProsRatingSubCollection;
+	}
 
-    public void setCriteriaMainRecno(CoopProsCriteriaMain criteriaMainRecno) {
-        this.criteriaMainRecno = criteriaMainRecno;
-    }
+	public void setCoopProsRatingSubCollection(Collection<CoopProsRatingSub> coopProsRatingSubCollection) {
+		this.coopProsRatingSubCollection = coopProsRatingSubCollection;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (subCriteriaRecno != null ? subCriteriaRecno.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (subCriteriaNum != null ? subCriteriaNum.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CoopProsCriteriaSub)) {
-            return false;
-        }
-        CoopProsCriteriaSub other = (CoopProsCriteriaSub) object;
-        if ((this.subCriteriaRecno == null && other.subCriteriaRecno != null) || (this.subCriteriaRecno != null && !this.subCriteriaRecno.equals(other.subCriteriaRecno))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof CoopProsCriteriaSub)) {
+			return false;
+		}
+		CoopProsCriteriaSub other = (CoopProsCriteriaSub) object;
+		if ((this.subCriteriaNum == null && other.subCriteriaNum != null) || (this.subCriteriaNum != null && !this.subCriteriaNum.equals(other.subCriteriaNum))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "model.CoopProsCriteriaSub[ subCriteriaRecno=" + subCriteriaRecno + " ]";
-    }
-    
+	@Override
+	public String toString() {
+		return "model.CoopProsCriteriaSub[ subCriteriaNum=" + subCriteriaNum + " ]";
+	}
+	
 }

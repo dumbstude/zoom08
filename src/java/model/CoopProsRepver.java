@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package model;
 
 import java.io.Serializable;
@@ -9,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,118 +27,117 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author roland
+ * @author mis
  */
 @Entity
 @Table(name = "coop_pros_repver")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CoopProsRepver.findAll", query = "SELECT c FROM CoopProsRepver c"),
-    @NamedQuery(name = "CoopProsRepver.findByRepVerLogno", query = "SELECT c FROM CoopProsRepver c WHERE c.repVerLogno = :repVerLogno"),
-    @NamedQuery(name = "CoopProsRepver.findByVerDate", query = "SELECT c FROM CoopProsRepver c WHERE c.verDate = :verDate"),
-    @NamedQuery(name = "CoopProsRepver.findByReportDtl", query = "SELECT c FROM CoopProsRepver c WHERE c.reportDtl = :reportDtl"),
-    @NamedQuery(name = "CoopProsRepver.findByUserId", query = "SELECT c FROM CoopProsRepver c WHERE c.userId = :userId")})
+	@NamedQuery(name = "CoopProsRepver.findAll", query = "SELECT c FROM CoopProsRepver c"),
+	@NamedQuery(name = "CoopProsRepver.findByRepVerLogno", query = "SELECT c FROM CoopProsRepver c WHERE c.repVerLogno = :repVerLogno"),
+	@NamedQuery(name = "CoopProsRepver.findByVerDate", query = "SELECT c FROM CoopProsRepver c WHERE c.verDate = :verDate"),
+	@NamedQuery(name = "CoopProsRepver.findByReportDtl", query = "SELECT c FROM CoopProsRepver c WHERE c.reportDtl = :reportDtl"),
+	@NamedQuery(name = "CoopProsRepver.findByUserNum", query = "SELECT c FROM CoopProsRepver c WHERE c.userNum = :userNum")})
 public class CoopProsRepver implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
+	private static final long serialVersionUID = 1L;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 4)
     @Column(name = "rep_ver_logno")
-    private String repVerLogno;
-    @Basic(optional = false)
+	private Integer repVerLogno;
+	@Basic(optional = false)
     @NotNull
     @Column(name = "ver_date")
     @Temporal(TemporalType.DATE)
-    private Date verDate;
-    @Size(max = 2147483647)
+	private Date verDate;
+	@Size(max = 2147483647)
     @Column(name = "report_dtl")
-    private String reportDtl;
-    @Basic(optional = false)
+	private String reportDtl;
+	@Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 8)
-    @Column(name = "user_id")
-    private String userId;
-    @JoinColumn(name = "pros_rep_recno", referencedColumnName = "pros_rep_recno")
+    @Size(min = 1, max = 10)
+    @Column(name = "user_num")
+	private String userNum;
+	@JoinColumn(name = "pros_rep_num", referencedColumnName = "pros_rep_num")
     @ManyToOne
-    private CoopProsReport prosRepRecno;
+	private CoopProsReport prosRepNum;
 
-    public CoopProsRepver() {
-    }
+	public CoopProsRepver() {
+	}
 
-    public CoopProsRepver(String repVerLogno) {
-        this.repVerLogno = repVerLogno;
-    }
+	public CoopProsRepver(Integer repVerLogno) {
+		this.repVerLogno = repVerLogno;
+	}
 
-    public CoopProsRepver(String repVerLogno, Date verDate, String userId) {
-        this.repVerLogno = repVerLogno;
-        this.verDate = verDate;
-        this.userId = userId;
-    }
+	public CoopProsRepver(Integer repVerLogno, Date verDate, String userNum) {
+		this.repVerLogno = repVerLogno;
+		this.verDate = verDate;
+		this.userNum = userNum;
+	}
 
-    public String getRepVerLogno() {
-        return repVerLogno;
-    }
+	public Integer getRepVerLogno() {
+		return repVerLogno;
+	}
 
-    public void setRepVerLogno(String repVerLogno) {
-        this.repVerLogno = repVerLogno;
-    }
+	public void setRepVerLogno(Integer repVerLogno) {
+		this.repVerLogno = repVerLogno;
+	}
 
-    public Date getVerDate() {
-        return verDate;
-    }
+	public Date getVerDate() {
+		return verDate;
+	}
 
-    public void setVerDate(Date verDate) {
-        this.verDate = verDate;
-    }
+	public void setVerDate(Date verDate) {
+		this.verDate = verDate;
+	}
 
-    public String getReportDtl() {
-        return reportDtl;
-    }
+	public String getReportDtl() {
+		return reportDtl;
+	}
 
-    public void setReportDtl(String reportDtl) {
-        this.reportDtl = reportDtl;
-    }
+	public void setReportDtl(String reportDtl) {
+		this.reportDtl = reportDtl;
+	}
 
-    public String getUserId() {
-        return userId;
-    }
+	public String getUserNum() {
+		return userNum;
+	}
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+	public void setUserNum(String userNum) {
+		this.userNum = userNum;
+	}
 
-    public CoopProsReport getProsRepRecno() {
-        return prosRepRecno;
-    }
+	public CoopProsReport getProsRepNum() {
+		return prosRepNum;
+	}
 
-    public void setProsRepRecno(CoopProsReport prosRepRecno) {
-        this.prosRepRecno = prosRepRecno;
-    }
+	public void setProsRepNum(CoopProsReport prosRepNum) {
+		this.prosRepNum = prosRepNum;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (repVerLogno != null ? repVerLogno.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (repVerLogno != null ? repVerLogno.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CoopProsRepver)) {
-            return false;
-        }
-        CoopProsRepver other = (CoopProsRepver) object;
-        if ((this.repVerLogno == null && other.repVerLogno != null) || (this.repVerLogno != null && !this.repVerLogno.equals(other.repVerLogno))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof CoopProsRepver)) {
+			return false;
+		}
+		CoopProsRepver other = (CoopProsRepver) object;
+		if ((this.repVerLogno == null && other.repVerLogno != null) || (this.repVerLogno != null && !this.repVerLogno.equals(other.repVerLogno))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "model.CoopProsRepver[ repVerLogno=" + repVerLogno + " ]";
-    }
-    
+	@Override
+	public String toString() {
+		return "model.CoopProsRepver[ repVerLogno=" + repVerLogno + " ]";
+	}
+	
 }

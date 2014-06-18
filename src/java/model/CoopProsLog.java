@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package model;
 
 import java.io.Serializable;
@@ -24,130 +26,131 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author roland
+ * @author mis
  */
 @Entity
 @Table(name = "coop_pros_log")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CoopProsLog.findAll", query = "SELECT c FROM CoopProsLog c"),
-    @NamedQuery(name = "CoopProsLog.findByChLogno", query = "SELECT c FROM CoopProsLog c WHERE c.chLogno = :chLogno"),
-    @NamedQuery(name = "CoopProsLog.findByChangeLogDate", query = "SELECT c FROM CoopProsLog c WHERE c.changeLogDate = :changeLogDate"),
-    @NamedQuery(name = "CoopProsLog.findByFieldChange", query = "SELECT c FROM CoopProsLog c WHERE c.fieldChange = :fieldChange"),
-    @NamedQuery(name = "CoopProsLog.findByOldValue", query = "SELECT c FROM CoopProsLog c WHERE c.oldValue = :oldValue"),
-    @NamedQuery(name = "CoopProsLog.findByNewValue", query = "SELECT c FROM CoopProsLog c WHERE c.newValue = :newValue")})
+	@NamedQuery(name = "CoopProsLog.findAll", query = "SELECT c FROM CoopProsLog c"),
+	@NamedQuery(name = "CoopProsLog.findByChLogno", query = "SELECT c FROM CoopProsLog c WHERE c.chLogno = :chLogno"),
+	@NamedQuery(name = "CoopProsLog.findByChangeLogDate", query = "SELECT c FROM CoopProsLog c WHERE c.changeLogDate = :changeLogDate"),
+	@NamedQuery(name = "CoopProsLog.findByFieldChange", query = "SELECT c FROM CoopProsLog c WHERE c.fieldChange = :fieldChange"),
+	@NamedQuery(name = "CoopProsLog.findByOldValue", query = "SELECT c FROM CoopProsLog c WHERE c.oldValue = :oldValue"),
+	@NamedQuery(name = "CoopProsLog.findByNewValue", query = "SELECT c FROM CoopProsLog c WHERE c.newValue = :newValue"),
+	@NamedQuery(name = "CoopProsLog.findByUserId", query = "SELECT c FROM CoopProsLog c WHERE c.userId = :userId")})
 public class CoopProsLog implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
+	private static final long serialVersionUID = 1L;
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ch_logno")
-    private Integer chLogno;
-    @Column(name = "change_log_date")
+	private Integer chLogno;
+	@Column(name = "change_log_date")
     @Temporal(TemporalType.DATE)
-    private Date changeLogDate;
-    @Size(max = 40)
+	private Date changeLogDate;
+	@Size(max = 40)
     @Column(name = "field_change")
-    private String fieldChange;
-    @Size(max = 40)
+	private String fieldChange;
+	@Size(max = 40)
     @Column(name = "old_value")
-    private String oldValue;
-    @Size(max = 40)
+	private String oldValue;
+	@Size(max = 40)
     @Column(name = "new_value")
-    private String newValue;
-    @JoinColumn(name = "prospect_no", referencedColumnName = "prospect_no")
+	private String newValue;
+	@Size(max = 10)
+    @Column(name = "user_id")
+	private String userId;
+	@JoinColumn(name = "prospect_no", referencedColumnName = "prospect_no")
     @ManyToOne
-    private CoopProspect prospectNo;
-    @JoinColumn(name = "user_id", referencedColumnName = "mem_id_no")
-    @ManyToOne
-    private CoopMember userId;
+	private CoopProspect prospectNo;
 
-    public CoopProsLog() {
-    }
+	public CoopProsLog() {
+	}
 
-    public CoopProsLog(Integer chLogno) {
-        this.chLogno = chLogno;
-    }
+	public CoopProsLog(Integer chLogno) {
+		this.chLogno = chLogno;
+	}
 
-    public Integer getChLogno() {
-        return chLogno;
-    }
+	public Integer getChLogno() {
+		return chLogno;
+	}
 
-    public void setChLogno(Integer chLogno) {
-        this.chLogno = chLogno;
-    }
+	public void setChLogno(Integer chLogno) {
+		this.chLogno = chLogno;
+	}
 
-    public Date getChangeLogDate() {
-        return changeLogDate;
-    }
+	public Date getChangeLogDate() {
+		return changeLogDate;
+	}
 
-    public void setChangeLogDate(Date changeLogDate) {
-        this.changeLogDate = changeLogDate;
-    }
+	public void setChangeLogDate(Date changeLogDate) {
+		this.changeLogDate = changeLogDate;
+	}
 
-    public String getFieldChange() {
-        return fieldChange;
-    }
+	public String getFieldChange() {
+		return fieldChange;
+	}
 
-    public void setFieldChange(String fieldChange) {
-        this.fieldChange = fieldChange;
-    }
+	public void setFieldChange(String fieldChange) {
+		this.fieldChange = fieldChange;
+	}
 
-    public String getOldValue() {
-        return oldValue;
-    }
+	public String getOldValue() {
+		return oldValue;
+	}
 
-    public void setOldValue(String oldValue) {
-        this.oldValue = oldValue;
-    }
+	public void setOldValue(String oldValue) {
+		this.oldValue = oldValue;
+	}
 
-    public String getNewValue() {
-        return newValue;
-    }
+	public String getNewValue() {
+		return newValue;
+	}
 
-    public void setNewValue(String newValue) {
-        this.newValue = newValue;
-    }
+	public void setNewValue(String newValue) {
+		this.newValue = newValue;
+	}
 
-    public CoopProspect getProspectNo() {
-        return prospectNo;
-    }
+	public String getUserId() {
+		return userId;
+	}
 
-    public void setProspectNo(CoopProspect prospectNo) {
-        this.prospectNo = prospectNo;
-    }
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-    public CoopMember getUserId() {
-        return userId;
-    }
+	public CoopProspect getProspectNo() {
+		return prospectNo;
+	}
 
-    public void setUserId(CoopMember userId) {
-        this.userId = userId;
-    }
+	public void setProspectNo(CoopProspect prospectNo) {
+		this.prospectNo = prospectNo;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (chLogno != null ? chLogno.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (chLogno != null ? chLogno.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CoopProsLog)) {
-            return false;
-        }
-        CoopProsLog other = (CoopProsLog) object;
-        if ((this.chLogno == null && other.chLogno != null) || (this.chLogno != null && !this.chLogno.equals(other.chLogno))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof CoopProsLog)) {
+			return false;
+		}
+		CoopProsLog other = (CoopProsLog) object;
+		if ((this.chLogno == null && other.chLogno != null) || (this.chLogno != null && !this.chLogno.equals(other.chLogno))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "model.CoopProsLog[ chLogno=" + chLogno + " ]";
-    }
-    
+	@Override
+	public String toString() {
+		return "model.CoopProsLog[ chLogno=" + chLogno + " ]";
+	}
+	
 }

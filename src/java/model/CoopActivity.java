@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package model;
 
 import java.io.Serializable;
@@ -25,220 +27,203 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.primefaces.event.SelectEvent;
 
 /**
  *
- * @author roland
+ * @author mis
  */
 @Entity
 @Table(name = "coop_activity")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CoopActivity.findAll", query = "SELECT c FROM CoopActivity c"),
-    @NamedQuery(name = "CoopActivity.findByActRecno", query = "SELECT c FROM CoopActivity c WHERE c.actRecno = :actRecno"),
-    @NamedQuery(name = "CoopActivity.findByActName", query = "SELECT c FROM CoopActivity c WHERE c.actName = :actName"),
-    @NamedQuery(name = "CoopActivity.findByActObj", query = "SELECT c FROM CoopActivity c WHERE c.actObj = :actObj"),
-    @NamedQuery(name = "CoopActivity.findByActDateFrom", query = "SELECT c FROM CoopActivity c WHERE c.actDateFrom = :actDateFrom"),
-    @NamedQuery(name = "CoopActivity.findByActDateTo", query = "SELECT c FROM CoopActivity c WHERE c.actDateTo = :actDateTo"),
-    @NamedQuery(name = "CoopActivity.findByActDetails", query = "SELECT c FROM CoopActivity c WHERE c.actDetails = :actDetails"),
-    @NamedQuery(name = "CoopActivity.findByActLocation", query = "SELECT c FROM CoopActivity c WHERE c.actLocation = :actLocation")})
+	@NamedQuery(name = "CoopActivity.findAll", query = "SELECT c FROM CoopActivity c"),
+	@NamedQuery(name = "CoopActivity.findByActNum", query = "SELECT c FROM CoopActivity c WHERE c.actNum = :actNum"),
+	@NamedQuery(name = "CoopActivity.findByActName", query = "SELECT c FROM CoopActivity c WHERE c.actName = :actName"),
+	@NamedQuery(name = "CoopActivity.findByActObj", query = "SELECT c FROM CoopActivity c WHERE c.actObj = :actObj"),
+	@NamedQuery(name = "CoopActivity.findByActDateFrom", query = "SELECT c FROM CoopActivity c WHERE c.actDateFrom = :actDateFrom"),
+	@NamedQuery(name = "CoopActivity.findByActDateTo", query = "SELECT c FROM CoopActivity c WHERE c.actDateTo = :actDateTo"),
+	@NamedQuery(name = "CoopActivity.findByActDetails", query = "SELECT c FROM CoopActivity c WHERE c.actDetails = :actDetails"),
+	@NamedQuery(name = "CoopActivity.findByActLocation", query = "SELECT c FROM CoopActivity c WHERE c.actLocation = :actLocation")})
 public class CoopActivity implements Serializable {
-    @OneToMany(mappedBy = "actRecno")
-    private Collection<CoopActivityAttendee> coopActivityAttendeeCollection;
-    @OneToMany(mappedBy = "actRecno")
-    private Collection<CoopOuAct> coopOuActCollection;
-    @OneToMany(mappedBy = "actRecno")
-    private Collection<CoopMemAct> coopMemActCollection;
-
-    private static final long serialVersionUID = 1L;
-    @Id
+	private static final long serialVersionUID = 1L;
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "act_recno")
-    private Integer actRecno;
-    @Basic(optional = false)
+    @Column(name = "act_num")
+	private Integer actNum;
+	@Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "act_name")
-    private String actName;
-    @Basic(optional = false)
+	private String actName;
+	@Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "act_obj")
-    private String actObj;
-    @Basic(optional = false)
+	private String actObj;
+	@Basic(optional = false)
     @NotNull
     @Column(name = "act_date_from")
     @Temporal(TemporalType.DATE)
-    private Date actDateFrom;
-    @Column(name = "act_date_to")
+	private Date actDateFrom;
+	@Column(name = "act_date_to")
     @Temporal(TemporalType.DATE)
-    private Date actDateTo;
-    @Size(max = 2147483647)
+	private Date actDateTo;
+	@Size(max = 2147483647)
     @Column(name = "act_details")
-    private String actDetails;
-    @Size(max = 30)
+	private String actDetails;
+	@Size(max = 30)
     @Column(name = "act_location")
-    private String actLocation;
-    @OneToMany(mappedBy = "actRecno")
-    private Collection<CoopRepAct> coopRepActCollection;
-    @JoinColumn(name = "act_type_code", referencedColumnName = "act_type_code")
+	private String actLocation;
+	@OneToMany(mappedBy = "actNum")
+	private Collection<CoopRepAct> coopRepActCollection;
+	@OneToMany(mappedBy = "actNum")
+	private Collection<CoopOuAct> coopOuActCollection;
+	@JoinColumn(name = "act_type_code", referencedColumnName = "act_type_code")
     @ManyToOne
-    private CoopActivityType actTypeCode;
-    @OneToMany(mappedBy = "actRecno")
-    private Collection<CoopProsAct> coopProsActCollection;
+	private CoopActivityType actTypeCode;
+	@OneToMany(mappedBy = "actNum")
+	private Collection<CoopMemAct> coopMemActCollection;
+	@OneToMany(mappedBy = "actNum")
+	private Collection<CoopProsAct> coopProsActCollection;
 
-    public CoopActivity() {
-    }
+	public CoopActivity() {
+	}
 
-    public CoopActivity(Integer actRecno) {
-        this.actRecno = actRecno;
-    }
+	public CoopActivity(Integer actNum) {
+		this.actNum = actNum;
+	}
 
-    public CoopActivity(Integer actRecno, String actName, String actObj, Date actDateFrom, Date actDateTo) {
-        this.actRecno = actRecno;
-        this.actName = actName;
-        this.actObj = actObj;
-        this.actDateFrom = actDateFrom;
-        this.actDateTo = actDateTo;
-    }
+	public CoopActivity(Integer actNum, String actName, String actObj, Date actDateFrom) {
+		this.actNum = actNum;
+		this.actName = actName;
+		this.actObj = actObj;
+		this.actDateFrom = actDateFrom;
+	}
 
-    public Integer getActRecno() {
-        return actRecno;
-    }
+	public Integer getActNum() {
+		return actNum;
+	}
 
-    public void setActRecno(Integer actRecno) {
-        this.actRecno = actRecno;
-    }
+	public void setActNum(Integer actNum) {
+		this.actNum = actNum;
+	}
 
-    public String getActName() {
-        return actName;
-    }
+	public String getActName() {
+		return actName;
+	}
 
-    public void setActName(String actName) {
-        this.actName = actName;
-    }
+	public void setActName(String actName) {
+		this.actName = actName;
+	}
 
-    public String getActObj() {
-        return actObj;
-    }
+	public String getActObj() {
+		return actObj;
+	}
 
-    public void setActObj(String actObj) {
-        this.actObj = actObj;
-    }
+	public void setActObj(String actObj) {
+		this.actObj = actObj;
+	}
 
-    public Date getActDateFrom() {
-        return actDateFrom;
-    }
+	public Date getActDateFrom() {
+		return actDateFrom;
+	}
 
-    public void setActDateFrom(Date actDateFrom) {
-        this.actDateFrom = actDateFrom;
-    }
+	public void setActDateFrom(Date actDateFrom) {
+		this.actDateFrom = actDateFrom;
+	}
 
-    public void handleDateSelect(SelectEvent event) {
-        Date date = (Date) event.getObject();
-    }
+	public Date getActDateTo() {
+		return actDateTo;
+	}
 
-    public Date getActDateTo() {
-        return actDateTo;
-    }
+	public void setActDateTo(Date actDateTo) {
+		this.actDateTo = actDateTo;
+	}
 
-    public void setActDateTo(Date actDateTo) {
-        this.actDateTo = actDateTo;
-    }
+	public String getActDetails() {
+		return actDetails;
+	}
 
-    public String getActDetails() {
-        return actDetails;
-    }
+	public void setActDetails(String actDetails) {
+		this.actDetails = actDetails;
+	}
 
-    public void setActDetails(String actDetails) {
-        this.actDetails = actDetails;
-    }
+	public String getActLocation() {
+		return actLocation;
+	}
 
-    public String getActLocation() {
-        return actLocation;
-    }
+	public void setActLocation(String actLocation) {
+		this.actLocation = actLocation;
+	}
 
-    public void setActLocation(String actLocation) {
-        this.actLocation = actLocation;
-    }
+	@XmlTransient
+	public Collection<CoopRepAct> getCoopRepActCollection() {
+		return coopRepActCollection;
+	}
 
-    @XmlTransient
-    public Collection<CoopRepAct> getCoopRepActCollection() {
-        return coopRepActCollection;
-    }
+	public void setCoopRepActCollection(Collection<CoopRepAct> coopRepActCollection) {
+		this.coopRepActCollection = coopRepActCollection;
+	}
 
-    public void setCoopRepActCollection(Collection<CoopRepAct> coopRepActCollection) {
-        this.coopRepActCollection = coopRepActCollection;
-    }
+	@XmlTransient
+	public Collection<CoopOuAct> getCoopOuActCollection() {
+		return coopOuActCollection;
+	}
 
-    public CoopActivityType getActTypeCode() {
-        return actTypeCode;
-    }
+	public void setCoopOuActCollection(Collection<CoopOuAct> coopOuActCollection) {
+		this.coopOuActCollection = coopOuActCollection;
+	}
 
-    public void setActTypeCode(CoopActivityType actTypeCode) {
-        this.actTypeCode = actTypeCode;
-    }
+	public CoopActivityType getActTypeCode() {
+		return actTypeCode;
+	}
 
-    @XmlTransient
-    public Collection<CoopProsAct> getCoopProsActCollection() {
-        return coopProsActCollection;
-    }
+	public void setActTypeCode(CoopActivityType actTypeCode) {
+		this.actTypeCode = actTypeCode;
+	}
 
-    public void setCoopProsActCollection(Collection<CoopProsAct> coopProsActCollection) {
-        this.coopProsActCollection = coopProsActCollection;
-    }
+	@XmlTransient
+	public Collection<CoopMemAct> getCoopMemActCollection() {
+		return coopMemActCollection;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (actRecno != null ? actRecno.hashCode() : 0);
-        return hash;
-    }
+	public void setCoopMemActCollection(Collection<CoopMemAct> coopMemActCollection) {
+		this.coopMemActCollection = coopMemActCollection;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CoopActivity)) {
-            return false;
-        }
-        CoopActivity other = (CoopActivity) object;
-        if ((this.actRecno == null && other.actRecno != null) || (this.actRecno != null && !this.actRecno.equals(other.actRecno))) {
-            return false;
-        }
-        return true;
-    }
+	@XmlTransient
+	public Collection<CoopProsAct> getCoopProsActCollection() {
+		return coopProsActCollection;
+	}
 
-    @Override
-    public String toString() {
-        return "model.CoopActivity[ actRecno=" + actRecno + " ]";
-    }
+	public void setCoopProsActCollection(Collection<CoopProsAct> coopProsActCollection) {
+		this.coopProsActCollection = coopProsActCollection;
+	}
 
-    @XmlTransient
-    public Collection<CoopActivityAttendee> getCoopActivityAttendeeCollection() {
-        return coopActivityAttendeeCollection;
-    }
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (actNum != null ? actNum.hashCode() : 0);
+		return hash;
+	}
 
-    public void setCoopActivityAttendeeCollection(Collection<CoopActivityAttendee> coopActivityAttendeeCollection) {
-        this.coopActivityAttendeeCollection = coopActivityAttendeeCollection;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof CoopActivity)) {
+			return false;
+		}
+		CoopActivity other = (CoopActivity) object;
+		if ((this.actNum == null && other.actNum != null) || (this.actNum != null && !this.actNum.equals(other.actNum))) {
+			return false;
+		}
+		return true;
+	}
 
-    @XmlTransient
-    public Collection<CoopOuAct> getCoopOuActCollection() {
-        return coopOuActCollection;
-    }
-
-    public void setCoopOuActCollection(Collection<CoopOuAct> coopOuActCollection) {
-        this.coopOuActCollection = coopOuActCollection;
-    }
-
-    @XmlTransient
-    public Collection<CoopMemAct> getCoopMemActCollection() {
-        return coopMemActCollection;
-    }
-
-    public void setCoopMemActCollection(Collection<CoopMemAct> coopMemActCollection) {
-        this.coopMemActCollection = coopMemActCollection;
-    }
+	@Override
+	public String toString() {
+		return "model.CoopActivity[ actNum=" + actNum + " ]";
+	}
+	
 }

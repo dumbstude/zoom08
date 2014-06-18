@@ -14,7 +14,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import model.CoopActivity;
-import model.CoopActivityAttendee;
 import model.CoopActivityType;
 import model.CoopApplicant;
 import model.CoopMemAct;
@@ -27,7 +26,8 @@ import model.CoopProsCriteria;
 import model.CoopProsCriteriaMain;
 import model.CoopProsCriteriaSub;
 import model.CoopProsLog;
-import model.CoopProsRating;
+import model.CoopProsRatingMain;
+import model.CoopProsRatingSub;
 import model.CoopProsReport;
 import model.CoopProsRepver;
 import model.CoopProspect;
@@ -38,7 +38,6 @@ import model.CoopReportType;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.SelectEvent;
-import service.CoopActivityAttendeeFacadeREST;
 import service.CoopActivityFacadeREST;
 import service.CoopActivityTypeFacadeREST;
 import service.CoopApplicantFacadeREST;
@@ -52,7 +51,8 @@ import service.CoopProsCriteriaFacadeREST;
 import service.CoopProsCriteriaMainFacadeREST;
 import service.CoopProsCriteriaSubFacadeREST;
 import service.CoopProsLogFacadeREST;
-import service.CoopProsRatingFacadeREST;
+import service.CoopProsRatingMainFacadeREST;
+import service.CoopProsRatingSubFacadeREST;
 import service.CoopProsReportFacadeREST;
 import service.CoopProsRepverFacadeREST;
 import service.CoopProspectFacadeREST;
@@ -72,9 +72,6 @@ public class EffortBean implements Serializable {
 	@EJB
 	private CoopActivityFacadeREST coopActivityFacadeREST;
 	private CoopActivity activity;
-	@EJB
-	private CoopActivityAttendeeFacadeREST coopActivityAttendeeFacadeREST;
-	private CoopActivityAttendee activityAttendee;
 	@EJB
 	private CoopActivityTypeFacadeREST coopActivityTypeFacadeREST;
 	private CoopActivityType activityType;
@@ -118,8 +115,11 @@ public class EffortBean implements Serializable {
 	private CoopProspect selectedProspect;
 	private DataModel<CoopProspect> prospectModel;
 	@EJB
-	private CoopProsRatingFacadeREST coopProsRatingFacadeREST;
-	private CoopProsRating prosRating;
+	private CoopProsRatingMainFacadeREST coopProsRatingMainFacadeREST;
+	private CoopProsRatingMain prosRatingMain;
+	@EJB
+	private CoopProsRatingSubFacadeREST coopProsRatingSubFacadeREST;
+	private CoopProsRatingSub prosRatingSub;
 	@EJB
 	private CoopProsReportFacadeREST coopProsReportFacadeREST;
 	private CoopProsReport prosReport;
@@ -157,7 +157,6 @@ public class EffortBean implements Serializable {
 
 	public void init() {
 		activity = new CoopActivity();
-		activityAttendee = new CoopActivityAttendee();
 		activityType = new CoopActivityType();
 		applicant = new CoopApplicant();
 		memAct = new CoopMemAct();
@@ -173,7 +172,8 @@ public class EffortBean implements Serializable {
 		prospect = new CoopProspect();
 		prospectList = coopProspectFacadeREST.findAll();
 		prospectModel = new ListDataModel<CoopProspect>(prospectList);
-		prosRating = new CoopProsRating();
+		prosRatingMain = new CoopProsRatingMain();
+		prosRatingSub = new CoopProsRatingSub();
 		prosReport = new CoopProsReport();
 		prosRepver = new CoopProsRepver();
 		repAct = new CoopRepAct();
@@ -204,14 +204,6 @@ public class EffortBean implements Serializable {
 
 	public CoopReportType getReportType() {
 		return reportType;
-	}
-
-	public CoopActivityAttendee getActivityAttendee() {
-		return activityAttendee;
-	}
-
-	public void setActivityAttendee(CoopActivityAttendee activityAttendee) {
-		this.activityAttendee = activityAttendee;
 	}
 
 	public CoopMemAct getMemAct() {
@@ -355,15 +347,26 @@ public class EffortBean implements Serializable {
 		this.report = report;
 	}
 
-	public CoopProsRating getProsRating() {
-		if (prosRating == null) {
-			prosRating = new CoopProsRating();
+	public CoopProsRatingMain getProsRatingMain() {
+		if (prosRatingMain == null) {
+			prosRatingMain = new CoopProsRatingMain();
 		}
-		return prosRating;
+		return prosRatingMain;
 	}
 
-	public void setProsRating(CoopProsRating prosRating) {
-		this.prosRating = prosRating;
+	public void setProsRatingMain(CoopProsRatingMain prosRatingMain) {
+		this.prosRatingMain = prosRatingMain;
+	}
+
+	public CoopProsRatingSub getProsRatingSub() {
+		if (prosRatingSub == null) {
+			prosRatingSub = new CoopProsRatingSub();
+		}
+		return prosRatingSub;
+	}
+
+	public void setProsRatingSub(CoopProsRatingSub prosRatingSub) {
+		this.prosRatingSub = prosRatingSub;
 	}
 
 	public CoopProsAct getProsAct() {
@@ -396,8 +399,6 @@ public class EffortBean implements Serializable {
 	public String saveEffort() {
 		coopActivityFacadeREST.edit(activity);
 		activity = new CoopActivity();
-		coopActivityAttendeeFacadeREST.edit(activityAttendee);
-		activityAttendee = new CoopActivityAttendee();
 		coopMemActFacadeREST.edit(memAct);
 		memAct = new CoopMemAct();
 		coopOuActFacadeREST.edit(ouAct);
@@ -406,8 +407,10 @@ public class EffortBean implements Serializable {
 		prosAct = new CoopProsAct();
 		coopProsLogFacadeREST.edit(prosLog);
 		prosLog = new CoopProsLog();
-		coopProsRatingFacadeREST.edit(prosRating);
-		prosRating = new CoopProsRating();
+		coopProsRatingMainFacadeREST.edit(prosRatingMain);
+		prosRatingMain = new CoopProsRatingMain();
+		coopProsRatingSubFacadeREST.edit(prosRatingSub);
+		prosRatingSub = new CoopProsRatingSub();
 		coopRepActFacadeREST.edit(repAct);
 		repAct = new CoopRepAct();
 		coopProsReportFacadeREST.edit(prosReport);
